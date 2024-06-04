@@ -11,18 +11,9 @@ class ForecastListView extends StatelessWidget {
       itemCount: forecastData.length,
       itemBuilder: (context, index) {
         var item = forecastData[index];
-        return Card(
-          color: Colors.green[50],
-          child: ListTile(
-            title: Text(
-              'Date: ${item['dt_txt']}',
-              style: TextStyle(color: Colors.green[800]),
-            ),
-            subtitle: Text(
-              'Temp: ${item['main']['temp']}°C, ${item['weather'][0]['description']}',
-              style: TextStyle(color: Colors.green[600]),
-            ),
-          ),
+        return ListTile(
+          title: Text('Date: ${item['dt_txt']}'),
+          subtitle: Text('Temp: ${item['main']['temp']}°C, ${item['weather'][0]['description']}'),
         );
       },
     );

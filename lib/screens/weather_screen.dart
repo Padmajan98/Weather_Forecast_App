@@ -13,7 +13,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
   String? _city;
   Map<String, dynamic>? _currentWeather;
   List<dynamic>? _forecast;
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -22,9 +21,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 
   Future<void> _loadData() async {
-    setState(() {
-      _isLoading = true;
-    });
     _city = await getSelectedCity();
     if (_city != null) {
       _currentWeather = getWeatherData('currentWeather');
@@ -32,20 +28,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
       if (_currentWeather == null || _forecast == null) {
         await _fetchWeather(_city!);
       }
-      setState(() {
-        _isLoading = false;
-      });
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() {});
     }
   }
 
   Future<void> _fetchWeather(String city) async {
-    setState(() {
-      _isLoading = true;
-    });
     try {
       var currentWeather = await fetchCurrentWeather(city);
       var forecast = await fetchWeatherForecast(city);
@@ -53,15 +40,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
         _currentWeather = currentWeather;
         _forecast = forecast;
         _city = city;
-        _isLoading = false;
       });
       saveSelectedCity(city);
       saveWeatherData('currentWeather', currentWeather);
       saveWeatherData('forecast', forecast);
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
       print(e);
     }
   }
@@ -86,15 +69,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
               },
             ),
             SizedBox(height: 20),
-            _isLoading
-                ? Center(child: CircularProgressIndicator())
-                : Column(
-                    children: [
-                      _currentWeather != null ? CurrentWeatherWidget(_currentWeather!) : Container(),
-                      SizedBox(height: 20),
-                      _forecast != null ? Expanded(child: ForecastListView(_forecast!)) : Container(),
-                    ],
-                  ),
+            _currentWeather != null ? CurrentWeatherWidget(_currentWeather!) : Container(),
+            SizedBox(height: 20),
+            _forecast != null ? Expanded(child: ForecastListView(_forecast!)) : Container(),
           ],
         ),
       ),

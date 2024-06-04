@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.green[50],
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           backgroundColor: Colors.green,
         ),
         inputDecorationTheme: InputDecorationTheme(
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home:  WeatherScreen(),
+      home: WeatherScreen(),
     );
   }
 }
